@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}Users{% endblock %}
+
+{% block content %}
+<h2>All Users</h2>
+
+<a href="{{ url_for('users.add_user') }}">➕ Add User</a>
+
+<table border="1" cellpadding="8" cellspacing="0" style="margin-top: 15px;">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.role }}</td>
+            <td>
+                <a href="{{ url_for('users.edit_user', user_id=user._id) }}">Edit</a>
+                |
+                <a href="{{ url_for('users.remove_user', user_id=user._id) }}"
+                   onclick="return confirm('Are you sure?')">
+                   Delete
+                </a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">No users found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
